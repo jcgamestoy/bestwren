@@ -11,6 +11,8 @@
 #include "wren_primitive.h"
 #include "wren_value.h"
 
+#include "wren_data.h"
+
 #include "wren_core.wren.inc"
 
 DEF_PRIMITIVE(bool_not)
@@ -1472,6 +1474,8 @@ void wrenInitializeCore(WrenVM* vm)
   PRIMITIVE(systemClass->obj.classObj, "gc()", system_gc);
   PRIMITIVE(systemClass->obj.classObj, "writeString_(_)", system_writeString);
 
+  ObjClass* dataClass = AS_CLASS(wrenFindVariable(vm, coreModule, "Data"));
+  wrenDataBindMethods(vm, dataClass);
   // While bootstrapping the core types and running the core module, a number
   // of string objects have been created, many of which were instantiated
   // before stringClass was stored in the VM. Some of them *must* be created

@@ -75,6 +75,7 @@ OBJECTS += $(OBJDIR)/wren_opt_random.o
 OBJECTS += $(OBJDIR)/wren_primitive.o
 OBJECTS += $(OBJDIR)/wren_utils.o
 OBJECTS += $(OBJDIR)/wren_value.o
+OBJECTS += $(OBJDIR)/wren_data.o
 OBJECTS += $(OBJDIR)/wren_vm.o
 
 # Rules
@@ -138,6 +139,9 @@ endif
 # #############################################
 
 $(OBJDIR)/wren_opt_meta.o: ../../src/optional/wren_opt_meta.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/wren_data.o: ../../src/vm/wren_data.c
 	@echo $(notdir $<)
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/wren_opt_random.o: ../../src/optional/wren_opt_random.c

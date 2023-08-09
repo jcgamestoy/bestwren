@@ -3,7 +3,7 @@
 DEFINES += -DWREN_OPT_RANDOM -DWREN_OPT_META -DWREN_TRY
 LDFLAGS += -s WASM=1 -s FILESYSTEM=0 -s EXIT_RUNTIME=0 -s ENVIRONMENT='web'
 LDFLAGS += -s EXPORTED_FUNCTIONS='["_main", "_wren_compile"]'
-LDFLAGS += -s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]'
+LDFLAGS += -s EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]'
 
 ifndef config
   config=release_32bit

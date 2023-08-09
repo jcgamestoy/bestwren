@@ -97,13 +97,17 @@ class Sequence {
   join() { join("") }
 
   join(sep) {
+    return this.joinData(sep).toString
+  }
+
+  joinData(sep) {
     var first = true
-    var result = ""
+    var result = Data.new()
 
     for (element in this) {
-      if (!first) result = result + sep
+      if (!first) result.add(sep)
       first = false
-      result = result + element.toString
+      result.add(element.toString)
     }
 
     return result
@@ -480,4 +484,9 @@ class ClassAttributes {
     _methods = methods
   }
   toString { "attributes:%(_attributes) methods:%(_methods)" }
+}
+
+foreign class Data {
+  construct new() {}
+  construct new(i) {}
 }

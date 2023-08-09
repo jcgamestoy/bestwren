@@ -8,6 +8,7 @@
 #include "wren_debug.h"
 #include "wren_primitive.h"
 #include "wren_vm.h"
+#include "wren_data.h"
 
 #if WREN_OPT_META
   #include "wren_opt_meta.h"
@@ -566,23 +567,29 @@ static void bindForeignClass(WrenVM* vm, ObjClass* classObj, ObjModule* module)
   methods.finalize = NULL;
   
   // Check the optional built-in module first so the host can override it.
-  
-  if (vm->config.bindForeignClassFn != NULL)
-  {
-    methods = vm->config.bindForeignClassFn(vm, module->name->value,
-                                            classObj->name->value);
-  }
+  if(module->name==NULL) {
+     if(!strcmp(classObj->name->value, "Data")) {
+        methods = wrenDataBindForeignClass(vm, module->name->value,classObj->name->value);
+     }
+  } else {
 
-  // If the host didn't provide it, see if it's a built in optional module.
-  if (methods.allocate == NULL && methods.finalize == NULL)
-  {
-#if WREN_OPT_RANDOM
-    if (strcmp(module->name->value, "random") == 0)
+    if (vm->config.bindForeignClassFn != NULL)
     {
-      methods = wrenRandomBindForeignClass(vm, module->name->value,
-                                           classObj->name->value);
+      methods = vm->config.bindForeignClassFn(vm, module->name->value,
+                                              classObj->name->value);
     }
+
+    // If the host didn't provide it, see if it's a built in optional module.
+    if (methods.allocate == NULL && methods.finalize == NULL)
+    {
+#if WREN_OPT_RANDOM
+      if (strcmp(module->name->value, "random") == 0)
+      {
+        methods = wrenRandomBindForeignClass(vm, module->name->value,
+                                            classObj->name->value);
+      }
 #endif
+    }
   }
   
   Method method;

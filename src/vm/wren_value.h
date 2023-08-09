@@ -887,4 +887,6 @@ static inline bool wrenMapIsValidKey(Value arg)
       || IS_STRING(arg);
 }
 
+ObjString* wrenNewStringFromData(WrenVM* vm, const char* data, size_t length);
+
 #endif

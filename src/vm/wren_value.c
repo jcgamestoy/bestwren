@@ -1328,3 +1328,11 @@ bool wrenValuesEqual(Value a, Value b)
       return false;
   }
 }
+
+ObjString* wrenNewStringFromData(WrenVM* vm, const char* data, size_t length)
+{
+  ObjString* string = allocateString(vm, length);
+  memcpy(string->value, data, length);
+  hashString(string);
+  return string;
+}

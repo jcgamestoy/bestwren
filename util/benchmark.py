@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from __future__ import print_function
 
@@ -84,6 +84,8 @@ BENCHMARK("fib", r"""317811
 BENCHMARK("fibers", r"""4999950000""")
 
 BENCHMARK("for", r"""499999500000""")
+
+BENCHMARK("join", r"""0""")
 
 BENCHMARK("method_call", r"""true
 false""")
